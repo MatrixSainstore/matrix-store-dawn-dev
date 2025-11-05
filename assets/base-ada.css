@@ -1,0 +1,48 @@
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::after,
+  ::before {
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001s !important;
+  }
+}
+a.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  padding: 6px;
+  font-size: 0;
+  width: 0;
+}
+a.skip-link:focus {
+  position: static;
+  left: 0;
+  top: 0;
+  font-size: 14px;
+}
+:focus-visible {
+  outline: 1;
+}
+.mask {
+  position: relative;
+}
+.mask::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: 0.5;
+  display: block;
+  position: absolute;
+}

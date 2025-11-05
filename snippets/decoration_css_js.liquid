@@ -1,0 +1,16 @@
+{% comment %}
+  /**
+   * 新增节日装饰说明:
+   * 1.先用liquid判断是否勾选了该节日装饰
+   * 2.如果勾选了, 用js给顶层的html加上特殊的节日类名
+   * 3.在decoration-style.css中, 给需要装饰的模块编写css样式, css最前面缀以: html.XXX 的选择器
+   */
+{% endcomment %}
+
+{% if settings.display_valentine_deoc %}
+  <script>
+    document.querySelector('html').classList.add('valentine-deoc-2025');
+  </script>
+
+  {{ 'decoration-style.css' | asset_url | stylesheet_tag }}
+{% endif %}

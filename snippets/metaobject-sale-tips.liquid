@@ -1,0 +1,97 @@
+{% comment %}
+  Render sale tips.
+
+  Usage:
+  {%- render 'metaobject-sale-tips' -%}
+{% endcomment %}
+
+{% assign sale_tips = shop.metaobjects.sale_tips.values | sort_natural: 'sequence' %}
+
+{%- for item in sale_tips -%}
+  {%- liquid
+    assign if_show = false
+    if item.display_tips
+      for collection in item.collection_list.value
+        for product_collection in product.collections
+          if if_show == false and product_collection.title contains collection.title
+            assign if_show = true
+            break
+          endif
+        endfor
+      endfor
+      for st_product in item.product_list.value
+        if if_show == false and product.title == st_product.title
+          assign if_show = true
+          break
+        endif
+      endfor
+      if item.invert_selection
+        if if_show
+          assign if_show = false
+        else
+          assign if_show = true
+        endif
+      endif
+    endif
+  -%}
+  
+  {% if if_show %}
+    {% if item.product_page_display %}
+      {% if template contains 'product' %}
+        <div class="sale_tips metaobjects-sale_tips pro-template-sale-tips" data-index="{{ item.sequence }}">{{ item.text | metafield_tag }}</div>
+        <style>
+          .sale_tips[data-index="{{ item.sequence }}"] p {
+            color: {%- if item.text_color -%}{{ item.text_color }}{%- else -%}var(--color-text){%- endif -%};
+            font-size:{%- if item.font_size -%}{{ item.font_size }}{%- else -%}16{%- endif -%}px;
+            white-space: pre-wrap;
+          }
+          .sale_tips[data-index="{{ item.sequence }}"] a {
+            color: {%- if item.text_color -%}{{ item.text_color }}{%- else -%}var(--color-text){%- endif -%};
+          }
+          .sale_tips[data-index="{{ item.sequence }}"] {
+            background-color: {%- if item.background_color -%}{{ item.background_color }}{%- else -%}unset{%- endif -%};
+            padding: 12px 16px;
+            margin-top: 10px;
+          }
+
+          @media screen and (max-width: 1000px) {
+            .sale_tips[data-index="{{  item.sequence }}"] {
+              margin-top: 0px;
+            }
+          }
+
+          @media screen and (max-width: 500px) {
+            .sale_tips[data-index="{{ item.sequence }}"] p {
+              font-size: 14px;
+            }
+          }
+        </style>
+      {% endif %}
+    {% else %}
+      <div class="sale_tips metaobjects-sale_tips" data-index="{{ item.sequence }}">{{ item.text | metafield_tag }}</div>
+      <style>
+        .sale_tips[data-index="{{ item.sequence }}"] p {
+          color: {%- if item.text_color -%}{{ item.text_color }}{%- else -%}var(--color-text){%- endif -%};
+          font-size:{%- if item.font_size -%}{{ item.font_size }}{%- else -%}16{%- endif -%}px;
+          white-space: pre-wrap;
+        }
+        .sale_tips[data-index="{{ item.sequence }}"] a {
+          color: {%- if item.text_color -%}{{ item.text_color }}{%- else -%}var(--color-text){%- endif -%};
+        }
+        .sale_tips[data-index="{{ item.sequence }}"] {
+          background-color: {%- if item.background_color -%}{{ item.background_color }}{%- else -%}unset{%- endif -%};
+        }
+
+        .metaobjects-sale_tips.hidden {
+          display: none;
+        }
+
+        @media screen and (max-width: 500px) {
+          .sale_tips[data-index="{{ item.sequence }}"] p {
+            font-size: 14px;
+          }
+        }
+      </style>
+    {% endif %}
+  {% endif %}
+{%- endfor -%}

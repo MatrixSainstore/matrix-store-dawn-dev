@@ -1,0 +1,216 @@
+{{ 'component-video-dialog-player.css' | asset_url | stylesheet_tag }}
+{{ 'section-home-youtube.css' | asset_url | stylesheet_tag }}
+{% comment %} Plyr video player {% endcomment %}
+
+{{ "plyr.min.css" | asset_url | stylesheet_tag }}
+<script src="{{ "plyr.min.js" | asset_url }}" defer="defer"></script>
+
+
+<div class="section-home-youtube section-wrap page-width">
+  <div class="video-bg">
+    <div class="video-container">
+      <span class="video-close-btn">
+        <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="5.12402" y="7.52179" width="2.41627" height="16.9139" transform="rotate(-45 5.12402 7.52179)" fill="#fff"></rect>
+          <rect x="6.83398" y="19.4817" width="2.41627" height="16.9139" transform="rotate(-135 6.83398 19.4817)" fill="#fff"></rect>
+        </svg>
+      </span>
+      <div class="video-content">
+        {% for block in section.blocks %}
+          {% if block.settings.youtbue_link != blank %}
+            <div class="video-url video-url1-{{ block.id}}" data-block-id="{{ block.id }}">
+              <div
+                id="player1-{{ forloop.index }}-{{block.id}}"
+                data-plyr-provider="youtube"
+                data-plyr-embed-id="{{ block.settings.youtbue_link }}"
+                data-poster="{{block.settings.youtube_image | image_url: width: 180  }}"
+              ></div>
+            </div>
+
+            <script defer>
+              document.addEventListener('DOMContentLoaded', () => {
+               const bg_player1_{{block.id|replace:'-','_'}} = new Plyr('#player1-{{ forloop.index }}-{{block.id}}',{
+                 loop: {active: true },
+                 resetOnEnd: true,
+                 tooltips:{controls: false, seek: false},
+                 youtube: {
+                    loop: 1,
+                 },
+                 muted: true,
+                 quality: { default: 1080, options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240] }
+              });
+
+              $(`.videocard-item`).click(function(){
+                console.log("videocard-item" );
+                let blockIdActive = $(this).attr("data-block-id");
+                let blocIdVideo = $(this).attr("data-block-videoid");
+                $(" .video-bg").css({"display": "block"});
+                $(`.video-url[data-block-id="${blockIdActive}"]`).addClass("active");
+                if($(`.video-url[data-block-id="${blockIdActive}"]`).hasClass("active")){
+                  bg_player1_{{block.id|replace:'-','_'}}.play();
+                } else{
+                    bg_player1_{{block.id|replace:'-','_'}}.pause();
+                }
+              });
+            
+              $(".video-bg, .video-close-btn").click(function(){
+                console.log("video-close-btn" );
+                let blockIdActive = $(this).siblings(".video-content").find(".video-url.active").attr("data-block-id");
+              if(blockIdActive){
+                    bg_player1_{{block.id|replace:'-','_'}}.pause();
+                } 
+                $(`.video-url[data-block-id="${blockIdActive}"]`).removeClass("active");
+                $(" .video-bg").css({"display": "none"});
+                
+              });
+
+            });
+            </script>
+            
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+  <div class="home-youtube-content">
+    <div class="home-youtube-cover-left"></div>
+    <div class="home-youtube-cover-right"></div>
+    <div class="home-youtube-bg swiper-container-free-mode swiper">
+      <div class="swiper-wrapper">
+        {% assign image_size = '180x' %}
+        {% for block in section.blocks %}
+          <div class="swiper-slide youtube-box">
+            <div
+              class="videocard-item"
+              data-block-id="{{ block.id }}"
+              data-videocode="{{ block.settings.youtbue_link }}"
+              data-block-videoid="bg_player1_{{block.id|replace:'-','_'}}"
+            >
+              {% if block.settings.youtube_image != blank %}
+                <div class="img__overlay">{{- 'icon-home-youtube.svg' | inline_asset_content -}}</div>
+                <img
+                  class="lazyload swiper-lazy"
+                  loading="lazy"
+                  data-src="{{ block.settings.youtube_image | img_url: image_size }}"
+                  width="180"
+                  height="98"
+                  alt="{{ block.settings.youtube_image.alt }}"
+                  fetchpriority="low"
+                >
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Initialize Swiper -->
+<script defer>
+  document.addEventListener('DOMContentLoaded', () => {
+    // 首页改版交互
+    var hyswiper = new Swiper('.home-youtube-bg', {
+      lazy: true,
+      loop: true,
+      freeMode: true,
+      autoplay: {
+        delay: 2000,
+        stopOnLastSlide: false,
+        disableOnInteraction: true,
+      },
+
+      slidesPerView: 10,
+      spaceBetween: 1,
+      centeredSlides: true,
+      watchSlidesProgress: true,
+      mousewheels: true,
+      breakpoints: {
+        320: {
+          slidesPerView: 2,
+          spaceBetween: 24,
+        },
+
+        450: {
+          slidesPerView: 3,
+          spaceBetween: 24,
+        },
+
+        700: {
+          slidesPerView: 3,
+          spaceBetween: 24,
+        },
+
+        900: {
+          slidesPerView: 4,
+          spaceBetween: 24,
+        },
+
+        1150: {
+          slidesPerView: 5,
+          spaceBetween: 24,
+        },
+
+        1300: {
+          slidesPerView: 6,
+          spaceBetween: 24,
+        },
+
+        1500: {
+          slidesPerView: 8,
+          spaceBetween: 24,
+        },
+      },
+    });
+    hyswiper.el.onmouseover = function () {
+      hyswiper.autoplay.stop();
+    };
+
+    hyswiper.el.onmouseout = function () {
+      hyswiper.autoplay.start();
+    };
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Home Youtube blocks",
+  "class": "home-youtube-module",
+  "max_blocks": 25,
+  "blocks": [
+    {
+      "type": "link_block",
+      "name": "Link block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "youtube_image",
+          "label": "Youtube Image",
+          "info": "Size: 241*136px"
+        },
+        {
+          "type": "text",
+          "id": "youtbue_link",
+          "label": "Youtube code"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Youtube blocks",
+      "category": "Image",
+      "blocks": [
+        {
+          "type": "link_block"
+        },
+        {
+          "type": "link_block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

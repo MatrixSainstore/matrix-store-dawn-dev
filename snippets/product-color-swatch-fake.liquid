@@ -1,0 +1,23 @@
+{% comment %}
+  Render a fake color option list for product.
+  产品颜色选项，假变体）
+
+  真变体在 'product-color-swatch.liquid' 中
+
+  Accepts:
+  - product: {Object} product object
+
+  Usage:
+    {% render 'product-color-swatch-fake', product: product %}
+{% endcomment %}
+
+{%- assign customDesc = product.metafields.custom_desc -%}
+{% if customDesc.variant_option.value contains 'Color' or customDesc.variant_option contains 'Color' %}
+  {% comment %} 交给 JS 去处理吧，用 liquid 处理怕是得疯掉 {% endcomment %}
+  <fake-color-swatch
+    data-metafield-options="{{ customDesc.variant_option | escape }}"
+    data-list-class="color-list fake-color-list"
+    data-item-class="color-btn fake-color-btn"
+  >
+  </fake-color-swatch>
+{% endif %}

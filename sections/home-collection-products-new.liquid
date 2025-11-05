@@ -1,0 +1,268 @@
+{{ 'section-home-collection-products-new.css' | asset_url | stylesheet_tag }}
+{{ 'snippet-card-product.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'component-add-cart-button.js' | asset_url }}" defer></script>
+<script src="{{ 'section-home-collection-products-new.js' | asset_url }}" defer></script>
+
+{%- assign element_id = 'home-collection-products-new__' | append: section.id -%}
+
+<style>
+  #{{ element_id }} {
+    /* 列数 */
+    --col-pc: {{ section.settings.col_pc }};
+    --col-pad: {{ section.settings.col_pad }};
+    --col-mb: {{ section.settings.col_mb }};
+  }
+</style>
+
+<div
+  id="{{ element_id }}"
+  class="home-collection-products-new {% unless section.settings.use_swiper %}home-collection-products-new--grid{% endunless %}"
+  style="background-color:{{ section.settings.bg_color }}"
+  data-use-swiper="{{ section.settings.use_swiper }}"
+>
+  <div class="section-wrap page-width">
+    <h3 class="new-section-title">{{ section.settings.title }}</h3>
+    <ul class="home-collection-list home-type-list">
+      {% for block in section.blocks %}
+        <li
+          class="new-collection-type-item home-type-item btn btn-5 text-16 {% if forloop.index==1 %}home-type-item-active{% endif %}"
+          data-type="{{ block.settings.collection_title | handle }}"
+        >
+          {{ block.settings.collection_title }}
+        </li>
+      {% endfor %}
+    </ul>
+    <div class="home-collection-products-content">
+      <div class="home-collection-products-container swiper-container swiper">
+        <div class="swiper-wrapper">
+          {% assign skip_card_product_styles = false %}
+          {% for block in section.blocks %}
+            {%- assign collection = collections[block.settings.collection] -%}
+            {% for product in collection.products limit: block.settings.number_of_products %}
+              {% assign lazy_load = false %}
+              {%- if forloop.index > 2 -%}
+                {%- assign lazy_load = true -%}
+              {%- endif -%}
+
+              <div class="card-product-item swiper-slide {{ block.settings.collection_title | handle }}">
+                {% render 'card-product',
+                  card_product: product,
+                  media_aspect_ratio: section.settings.image_ratio,
+                  image_shape: section.settings.image_shape,
+                  show_secondary_image: section.settings.show_secondary_image,
+                  show_vendor: section.settings.show_vendor,
+                  show_rating: section.settings.show_rating,
+                  lazy_load: lazy_load,
+                  skip_styles: skip_card_product_styles,
+                  quick_add: section.settings.quick_add,
+                  section_id: section.id,
+                  background_color: section.settings['pro-background'],
+                  show_btn: section.settings.show_btn
+                %}
+              </div>
+              {%- assign skip_card_product_styles = true -%}
+            {% endfor %}
+          {% endfor %}
+        </div>
+      </div>
+      <div class="swiper-button-prev swiper-button-prev-home another-btn ">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path opacity="0.6" d="M24 44C35.046 44 44 35.046 44 24C44 12.954 35.046 4 24 4C12.954 4 4 12.954 4 24C4 35.046 12.954 44 24 44Z" fill="#7E7E7E" stroke="#7E7E7E" stroke-width="3" stroke-linejoin="round"/>
+          <path opacity="0.8" d="M27 33L18 24L27 15" stroke="#E0E0E0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="swiper-button-next swiper-button-next-home another-btn">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path opacity="0.6" d="M24 44C35.046 44 44 35.046 44 24C44 12.954 35.046 4 24 4C12.954 4 4 12.954 4 24C4 35.046 12.954 44 24 44Z" fill="#7E7E7E" stroke="#7E7E7E" stroke-width="3" stroke-linejoin="round"/>
+          <path opacity="0.8" d="M21 33L30 24L21 15" stroke="#E0E0E0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="swiper-pagination-new-home swiper-pagination"></div>
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Product Collection",
+  "class": "section-home-collection-products-new",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "background color",
+      "default": "#000000"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_swiper",
+      "label": "Use swiper",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "+ Grid",
+      "info": "Support if 'Use swiper' is false"
+    },
+    {
+      "type": "number",
+      "id": "col_pc",
+      "label": "Columns (pc)",
+      "default": 4
+    },
+    {
+      "type": "number",
+      "id": "col_pad",
+      "label": "Columns (pad)",
+      "default": 3
+    },
+    {
+      "type": "number",
+      "id": "col_mb",
+      "label": "Columns (mb)",
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Product card settings"
+    },
+    {
+      "type": "select",
+      "id": "pro-background",
+      "label": "Product card background color",
+      "options": [
+        {
+          "value": "black",
+          "label": "Black"
+        },
+        {
+          "value": "white",
+          "label": "White"
+        }
+      ],
+      "default": "black"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__1.label"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__2.label"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__3.label"
+        }
+      ],
+      "default": "adapt",
+      "label": "t:sections.main-collection-product-grid.settings.image_ratio.label"
+    },
+    {
+      "type": "select",
+      "id": "image_shape",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:sections.all.image_shape.options__1.label"
+        },
+        {
+          "value": "arch",
+          "label": "t:sections.all.image_shape.options__2.label"
+        },
+        {
+          "value": "blob",
+          "label": "t:sections.all.image_shape.options__3.label"
+        },
+        {
+          "value": "chevronleft",
+          "label": "t:sections.all.image_shape.options__4.label"
+        },
+        {
+          "value": "chevronright",
+          "label": "t:sections.all.image_shape.options__5.label"
+        },
+        {
+          "value": "diamond",
+          "label": "t:sections.all.image_shape.options__6.label"
+        },
+        {
+          "value": "parallelogram",
+          "label": "t:sections.all.image_shape.options__7.label"
+        },
+        {
+          "value": "round",
+          "label": "t:sections.all.image_shape.options__8.label"
+        }
+      ],
+      "default": "default",
+      "label": "t:sections.all.image_shape.label",
+      "info": "t:sections.all.image_shape.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": false,
+      "label": "t:sections.main-collection-product-grid.settings.show_secondary_image.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "t:sections.main-collection-product-grid.settings.show_vendor.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "default": false,
+      "label": "t:sections.main-collection-product-grid.settings.show_rating.label",
+      "info": "t:sections.main-collection-product-grid.settings.show_rating.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_btn",
+      "default": true,
+      "label": "show add to cart button"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Collection List",
+      "type": "image",
+      "settings": [
+        {
+          "type": "text",
+          "id": "collection_title",
+          "label": "Collection Title"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "number",
+          "default": 6,
+          "id": "number_of_products",
+          "label": "Display the number of products"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Collection"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,118 @@
+{% comment %}
+  Render sale tips discount price.
+
+  Usage:
+  {%- render 'product-discount="{{ sale_value }}" -%}
+{% endcomment %}
+
+{% assign sale_tips = shop.metaobjects.sale_tips.values | sort_natural: 'sequence' %}
+
+{%- for item in sale_tips -%}
+  {%- liquid
+    if item.discount_price_show
+      assign if_show = false
+      assign sale_group = item.text | metafield_tag | strip_html | slice: 1, 500 | split: ' '
+
+      if item.display_tips
+        for collection in item.collection_list.value
+          for product_collection in product.collections
+            if if_show == false and product_collection.title contains collection.title
+              assign if_show = true
+              break
+            endif
+          endfor
+        endfor
+
+        for st_product in item.product_list.value
+          if if_show == false and product.title == st_product.title
+            assign if_show = true
+            break
+          endif
+        endfor
+
+        if item.invert_selection
+          if if_show
+            assign if_show = false
+          else
+            assign if_show = true
+          endif
+        endif
+
+        if if_show == true
+          assign sequence = item.sequence
+          for i in sale_group
+            if i contains '%'
+              assign sale_value = i | remove: '%' | minus: 100 | divided_by: 100.00 | abs
+              assign sale_new_price = product.selected_or_first_available_variant.price | times: sale_value
+              assign sale_text = 'Now'
+            endif
+          endfor
+        endif
+      endif
+    else
+      assign sale_value = false
+    endif
+  -%}
+
+  {% if sale_value %}
+    <span
+      class="product-sale-dicount-price"
+      discount="{{ sale_value }}"
+      sequence="{{ sequence }}"
+    >
+      {% unless format %}{% assign format = 'prepend_code' %}{% endunless %}
+      {% if template contains 'product' %}
+        {{ sale_text }}
+      {% endif %}
+      {{- sale_new_price | money_with_currency }}
+    </span>
+  {% endif %}
+{%- endfor -%}
+
+<script defer>
+  document.addEventListener('DOMContentLoaded', () => {
+    function saleTipsChange() {
+      $('.product-card-wrapper').each(function () {
+        if (
+          $(this)
+            .find('.metaobjects-sale_tips')
+            .filter(function () {
+              const dataIndex = $(this).attr('data-index');
+              return dataIndex !== '1' && dataIndex !== '7';
+            }).length > 0
+        ) {
+          $(this).find('.metaobjects-sale_tips[data-index="1"]').hide();
+        }
+
+        if ($(this).find('.product-sale-dicount-price').text().trim() === '') {
+          $(this).find('.product-sale-dicount-price').empty();
+        }
+      });
+    }
+
+    saleTipsChange();
+
+    if ($('.product-grid-container').length > 0) {
+      // 选择你想监测的区域
+      const targetNode = document.querySelector('.product-grid-container');
+
+      // 配置 MutationObserver
+      const config = { childList: true, subtree: true };
+
+      // 创建回调函数
+      const callback = function (mutationsList, observer) {
+        for (let mutation of mutationsList) {
+          if (mutation.type === 'childList') {
+            saleTipsChange();
+          }
+        }
+      };
+
+      // 创建 MutationObserver 实例
+      const observer = new MutationObserver(callback);
+
+      // 开始监测
+      observer.observe(targetNode, config);
+    }
+  });
+</script>

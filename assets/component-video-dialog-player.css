@@ -1,0 +1,120 @@
+video-dialog-player {
+  width: 100%;
+  display: block;
+  position: relative;
+}
+
+video-dialog-player img {
+  display: block;
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  video-dialog-player .video-dialog-player__cover-pc {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  video-dialog-player .video-dialog-player__cover-mb {
+    display: none;
+  }
+}
+
+video-dialog-player {
+  position: relative;
+}
+
+.video-dialog-player__play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  cursor: pointer;
+}
+
+video-dialog-player.dialog--open .video-dialog-player__play-button {
+  display: none;
+}
+
+.video-dialog-player__play-button svg {
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.video-dialog-player__play-button svg:hover {
+  transform: scale(0.8);
+}
+
+.video-dialog-player__dialog-wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 1200px;
+  height: auto;
+  display: none;
+  z-index: 1001;
+}
+
+video-dialog-player.dialog--open .video-dialog-player__dialog-wrapper {
+  display: block;
+}
+
+.video-dialog-player__dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  z-index: 1003;
+}
+
+.video-dialog-player__dialog .video-wrapper {
+  max-width: 100%;
+}
+
+.video-dialog-player__dialog .playerVideo {
+  width: 100%;
+}
+
+.video-dialog-player__overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1002;
+}
+
+.video-dialog-player__close-button {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  z-index: 1003;
+  cursor: pointer;
+}
+
+.video-dialog-player__close-button svg {
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 989px) {
+  .video-dialog-player__close-button .video-dialog-player__dialog {
+    right: 0;
+  }
+}
+
+@media (max-width: 589px) {
+  .video-dialog-player__play-button {
+    width: 60px;
+  }
+}

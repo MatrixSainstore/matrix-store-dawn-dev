@@ -1,0 +1,240 @@
+@media screen and (max-width: 749px) {
+  .collection .grid__item:only-child {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 989px) {
+  .collection .slider.slider--tablet {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.collection .loading-overlay {
+  position: absolute;
+  z-index: 1;
+  width: 1.8rem;
+}
+
+@media screen and (max-width: 749px) {
+  .collection .loading-overlay {
+    top: 0;
+    right: 0;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .collection .loading-overlay {
+    left: 0;
+  }
+}
+
+.collection .loading-overlay {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+  width: 100%;
+  padding: 0 1.5rem;
+  opacity: 0.7;
+}
+
+@media screen and (min-width: 750px) {
+  .collection .loading-overlay {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+}
+
+.collection.loading .loading-overlay {
+  display: block;
+}
+
+.collection--empty .title-wrapper {
+  margin-top: 10rem;
+  margin-bottom: 15rem;
+}
+
+@media screen and (max-width: 989px) {
+  .collection .slider--tablet.product-grid {
+    scroll-padding-left: 1.5rem;
+  }
+}
+
+.collection__description > * {
+  margin: 0;
+}
+
+.collection__title.title-wrapper {
+  margin-bottom: 2.5rem;
+}
+
+.collection__title .title:not(:only-child) {
+  margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 990px) {
+  .collection__title--desktop-slider .title {
+    margin-bottom: 2.5rem;
+  }
+
+  .collection__title.title-wrapper--self-padded-tablet-down {
+    padding: 0 5rem;
+  }
+
+  .collection slider-component:not(.page-width-desktop) {
+    padding: 0;
+  }
+
+  .collection--full-width slider-component:not(.slider-component-desktop) {
+    padding: 0 1.5rem;
+    max-width: none;
+  }
+}
+
+.collection__view-all a:not(.link) {
+  margin-top: 1rem;
+}
+
+
+
+
+
+
+
+.facets-vertical-sort,
+.facets-vertical,
+.klaviyo-width {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.klaviyo-width {
+  display: flex;
+  justify-content: center;
+  margin: 50px auto;
+}
+
+.klaviyo-width .klaviyo-form {
+  width: 100%;
+  max-width: 740px;
+}
+
+@media (max-width: 1000px) {
+  .template-collection .page-width {
+    width: 100%;
+  }
+
+  .facets-vertical-sort,
+  .facets-vertical,
+  .klaviyo-width {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+
+
+/* products */
+.product-grid-container .grid--3-col-desktop {
+  grid-template-columns: repeat(3, 1fr)
+}
+
+.product-grid-container .grid--4-col-desktop {
+  grid-template-columns: repeat(4, 1fr)
+}
+
+.product-grid-container .grid--5-col-desktop {
+  grid-template-columns: repeat(5, 1fr)
+}
+
+.product-grid-container .grid--6-col-desktop {
+  grid-template-columns: repeat(6, 1fr)
+}
+
+.product-grid-container .grid {
+  display: grid;
+  column-gap: 20px;
+  row-gap: 40px;
+}
+
+.product-grid-container .grid .grid__item {
+  width: 100%;
+  max-width: 100%;
+  opacity: 1;
+}
+
+.product-grid-container .grid .grid__item .product-card-wrapper {
+  padding: 28px 2%;
+}
+
+.quick-add .quick-add__submit {
+  padding: 0;
+}
+
+#product-grid .grid__item .product-card-wrapper .price__regular .price-item--regular,
+#product-grid .grid__item .product-card-wrapper .price__sale .price-item--sale {
+  text-decoration: none;
+}
+
+@media (max-width: 1000px) {
+  .product-grid-container .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    overflow: hidden;
+  }
+
+  .product-grid-container .grid .grid__item .product-card-wrapper {
+    padding: 40px 8px 20px;
+  }
+
+  .product-card-wrapper .quick-add {
+    margin-bottom: 0;
+  }
+}
+
+/* products */
+
+
+
+
+
+
+/* pagination */
+.pagination__list li {
+  width: 40px;
+  background-color: #2f3133;
+  box-shadow: 0 4px 4px #00000040, inset 0 1px 2px #95959540;
+  border-radius: 4px;
+}
+
+.pagination__list li a {
+  font-size: 20px;
+  color: #fff;
+  text-decoration: none !important;
+}
+
+.pagination__list li a:hover {
+  opacity: 0.4;
+}
+
+.pagination__list li a::after,
+.pagination__list li a:hover::after {
+  display: none;
+}
+
+.pagination__list li .pagination__item--current {
+  border-radius: 5px;
+  border: 1px solid #ea0029;
+  background-color: #000;
+  z-index: 2;
+  opacity: 1;
+}
+
+.pagination__list li .pagination__item--current:hover {
+  opacity: 1;
+}
+
+/* pagination */

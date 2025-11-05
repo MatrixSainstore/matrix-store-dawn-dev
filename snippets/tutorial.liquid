@@ -1,0 +1,86 @@
+<p>Hello from tutorial.liquid</p>
+
+{% comment %}
+  {% assign myVariable = 'Hello World from variable' %}
+  {{ myVariable }}
+{% endcomment %}
+
+{% comment %}
+  {% for tag in product.tags %}
+    {{ tag }}
+    <br>
+  {% endfor %}
+{% endcomment %}
+{% comment %}
+  <p>Product Title: {{ product.title }}</p>
+  <p>Product Price: {{ product.price | money }}</p>
+  <p>Product Description: {{ product.description }}</p>
+  <p>Product Vendor: {{ product.vendor }}</p>
+{% endcomment %}
+
+{% comment %}
+  {{ product.tags[0] }}
+
+  <br>
+{% endcomment %}
+{% comment %}
+  {% for tag in product.tags %}
+    {{ tag }}
+    <br>
+  {% endfor %}
+
+  <p>{{ product.title }}</p>
+  <br>
+{% endcomment %}
+{% comment %}
+  {% assign html = '<div><p>Hello {{ product.title }}</p></div>' %}
+
+  {{ html }}
+{% endcomment %}
+
+{% comment %}
+  {% capture html %}
+    <div>
+      <p>Hello {{ product.title }}</p>
+    </div>
+  {% endcapture %}
+  {{ html }}
+{% endcomment %}
+
+{% comment %}
+  {% assign isASnowboard = false %}
+  {% if product.title contains 'Snowboard' or product.type == 'snowboard' %}
+    {% assign isASnowboard = true %}
+  {% endif %}
+
+  {% if isASnowboard and product.price < 70000 %}
+    <p>This is an affordable snowboard</p>
+  {% endif %}
+
+  {% case product.type %}
+    {% when 'snowboard' %}
+      <p>This is a snowboard</p>
+  {% endcase %}
+{% endcomment %}
+
+{% for product in collection.products %}
+  <p
+    style="
+          {% if forloop.first%}
+      color: red;
+      {% elsif forloop.index == 2 %}
+      color: blue;
+      {% else %}
+      color: green;
+      {% endif %}
+    "
+  >
+    {{ forloop.index0 }} - {{ product.title }}
+  </p>
+
+  <ul>
+    {% for tag in product.tags %}
+      <li>{{ tag }}</li>
+    {% endfor %}
+  </ul>
+{% endfor %}

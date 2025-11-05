@@ -1,0 +1,59 @@
+{% comment %}
+  Render a color option list for product.
+  产品颜色选项，真变体
+  以 data-color-swatch-item 作为事件交互
+
+  假变体在 'product-color-swatch-fake.liquid' 中
+
+  Accepts:
+  - product: {Object} product object
+
+  Usage:
+    {% render 'product-color-swatch', product: product %}
+{% endcomment %}
+
+{% assign colordispaly = false %}
+
+{% for option in product.options_with_values %}
+  {% if option.name contains 'Color' %}
+    {% assign colordispaly = true %}
+  {% endif %}
+{% endfor %}
+
+{% if colordispaly %}
+  <ul class="color-list pro-color-list" data-color-swatch>
+    {% for option in product.options_with_values %}
+      {% comment %} option {% endcomment %}
+      {% if option.name contains 'Color' %}
+        {% assign option_index = forloop.index0 %}
+        {% for value in option.values %}
+          {% comment %} value {% endcomment %}
+          {%- liquid
+            assign value_index = forloop.index0
+            assign variant = product.variants[value_index]
+            # 遍历产品变体找到符合该选项的变体
+            for forloop_variant in product.variants
+              if forloop_variant.options[option_index] == value and variant.featured_image != blank
+                assign variant = forloop_variant
+                break
+              endif
+            endfor
+          -%}
+          <li
+            class="color-btn {% if forloop.first %}active{% endif %}{% if variant.title== 'Black' %} bgc-black{% else %} bgc-{{ value | split: ' ' | last | handle }}{% endif %}"
+            {% if variant.metafields.global.color != blank %}
+              style="background: {{ variant.metafields.global.color }}"
+            {% endif %}
+            data-variant="{{ variant.id }}"
+            data-id="{{ product.id }}"
+            data-img="{{ variant.featured_image.src | default: product.featured_image | image_url: width: 600 }}"
+            data-option-name="{{ option.name }}"
+            data-option-value="{{ value }}"
+            data-option-index0="{{ option_index }}"
+            data-color-swatch-item
+          ></li>
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+  </ul>
+{% endif %}

@@ -1,0 +1,123 @@
+{{ 'section-home-brands.css' | asset_url | stylesheet_tag }}
+
+<div class="home-brands-new section-wrap page-width">
+  <h3 class="new-section-title">{{ section.settings.title }}</h3>
+  <div class="home-brands-content">
+    <div class="home-brands-cover-left"></div>
+    <div class="home-brands-cover-right"></div>
+    <div class="home-brands-container swiper-container">
+      <div class="home-brands-swiper-wrapper swiper-wrapper">
+        {% for item in section.blocks %}
+          <div class="home-brands-items swiper-slide">
+            {% for block in section.blocks %}
+              <div class="home-brands-item">
+                <img
+                  alt="{{ block.settings.image.alt }}"
+                  class="lazyload swiper-lazy"
+                  data-src="{{ block.settings.image | img_url: 'master'}}"
+                  loading="lazy"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"
+                  fetchpriority="low"
+                >
+              </div>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script defer>
+  document.addEventListener('DOMContentLoaded', () => {
+    var home_brands_swiper = new Swiper('.home-brands-container', {
+      lazy: true,
+      slidesPerView: 1,
+      loop: true, // 开启loop选项，让swiper无限循环向左移动
+      freeMode: false, // 关闭freeMode选项
+      noSwiping: true, // 禁用用户交互，确保swiper只自动向左移动
+      updateOnWindowResize: true,
+      autoplay: {
+        delay: 1000,
+        disableOnInteraction: false,
+      },
+      speed: 50000, // 设置速度，值越大，移动越慢
+      breakpoints: {
+        320: {
+          //当屏幕宽度大于等于320 大于4.5版本使用
+          slidesPerView: 0.3,
+        },
+        768: {
+          //当屏幕宽度大于等于768  大于4.5版本使用
+          slidesPerView: 0.6,
+        },
+        1000: {
+          slidesPerView: 0.75,
+        },
+        1280: {
+          slidesPerView: 0.95,
+        },
+        1500: {
+          slidesPerView: 1,
+        },
+      },
+    });
+    var swiperContainer_brands = document.querySelector('.home-brands-container');
+    swiperContainer_brands.addEventListener('mouseenter', function () {
+      // 鼠标悬停时启动滚动
+      home_brands_swiper.autoplay.start();
+    });
+    swiperContainer_brands.addEventListener('mouseleave', function () {
+      // 鼠标移开时停止滚动
+      home_brands_swiper.autoplay.stop();
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Brands Block",
+  "class": "section-home-brands",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "AS FEATURED IN"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Recommended Image: Width x Height (510 x 70)px"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Your Brands",
+          "default": "Loremous"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Optional"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brands",
+      "category": "Brands"
+    }
+  ]
+}
+{% endschema %}

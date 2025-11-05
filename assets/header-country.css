@@ -1,0 +1,15 @@
+.desktop-localization-wrapper {
+    display: none;
+}
+
+.header-currency .geolizr-currency-switch-wrapper {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: auto;
+    height: auto;
+}
+
+.header-currency .geolizr-currency-switch-wrapper .geolizr-currency-list {
+    bottom: -160px;
+}

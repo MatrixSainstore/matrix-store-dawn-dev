@@ -1,0 +1,105 @@
+<script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=PeCpPN"></script>
+
+{% if page.template_suffix contains 'order-track' %}
+  <!-- trackorder get code -->
+  <script defer>
+    var str_href = window.location.href;
+    //       https://rkgamingstore.com/pages/tracking-order
+    if (str_href.indexOf('app') >= 0) {
+      var new_url = 'https://redragonshop.myshopify.com/pages/tracking-order';
+      var currentUrl = new URL(new_url);
+      fetch(currentUrl, {
+        credentials: 'same-origin',
+        method: 'GET',
+      }).then(function (response) {
+        response.text().then(function (content) {
+          var tempElement = document.createElement('div');
+          tempElement.innerHTML = content;
+          if ($('#root').length) {
+            $('#root').after(`<div id="order-track-content"></div>`);
+          }
+          document.querySelector('#order-track-content').innerHTML =
+            tempElement.querySelector('#order-track-content').innerHTML;
+          new Swiper('.review-list_box');
+          var mySwiper = document.querySelector('.review-list_box').swiper;
+          var reviewlist_box = new Swiper('.review-list_box', {
+            slidesPerGroup: 1,
+            navigation: {
+              nextEl: '.swiper-button-next-r',
+              prevEl: '.swiper-button-prev-l',
+            },
+            pagination: '.swiper-pagination',
+            observer: true,
+            observeParents: true,
+            breakpoints: {
+              1000: {
+                slidesPerView: 4,
+                spaceBetween: 15,
+              },
+              700: {
+                slidesPerView: 3,
+                spaceBetween: 15,
+              },
+              500: {
+                slidesPerView: 1,
+                spaceBetween: 0,
+              },
+            },
+          });
+          mySwiper.slideNext();
+          mySwiper.slidePrev();
+        });
+      });
+    }
+  </script>
+{% endif %}
+
+{% if template contains 'page' %}
+  <!-- Klaviyo track which page -->
+  <script defer>
+    var _learnq = _learnq || [];
+    var page = window.location.href;
+    _learnq.push(['track', 'Viewed Page', { url: page }]);
+  </script>
+{% endif %}
+
+{% render 'GA4-product-datalayer' %}
+
+<!-- Back in Stock helper snippet -->
+{% render 'back-in-stock-helper' %}
+<!-- End Back in Stock helper snippet -->
+
+{% render 'smile-initializer' %}
+
+{%- if template contains 'product' -%}
+  {% render 'notify-me' %}
+  <script type="text/javascript" async>
+    /*klaviyo track view*/
+    var _learnq = _learnq || [];
+
+    var item = {
+      Name: {{ product.title|json }},
+      ProductID: {{ product.id|json }},
+      Categories: {{ product.collections|map:'title'|json }},
+      ImageURL: "https:{{ product.featured_image | image_url }}",
+      URL: "{{ shop.secure_url }}{{ product.url }}",
+      Brand: {{ product.vendor|json }},
+      Price: {{ product.price|money|json }},
+      CompareAtPrice:{{ product.compare_at_price_max|money|json }}
+    };
+
+    _learnq.push(['track', 'Viewed Product', item]);
+    _learnq.push(['trackViewedItem', {
+      Title: item.Name,
+      ItemId: item.ProductID,
+      Categories: item.Categories,
+      ImageUrl: item.ImageURL,
+      Url: item.URL,
+      Metadata: {
+        Brand: item.Brand,
+        Price: item.Price,
+        CompareAtPrice: item.CompareAtPrice
+      }
+    }]);
+  </script>
+{%- endif -%}

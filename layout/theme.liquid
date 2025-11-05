@@ -37,9 +37,13 @@
       <meta name="description" content="{{ page_description | escape }}">
     {% endif %}
 
-    {% render 'meta-tags' %}
+    {% comment %} 节日装饰 {% endcomment %}
+    {% render 'decoration_css_js' %}
 
-    {% comment %} {% render 'geolizr-init' %} {% endcomment %}
+    {% render 'meta-tags' %}
+    {% render 'theme-seo' %}
+
+    {% render 'geolizr-init' %}
 
     <script src="{{ 'jquery-3.7.1.min.js' | asset_url }}"></script>
     <script src="{{ 'swiper-bundle.min.js' | asset_url }}" async="async"></script>
@@ -53,9 +57,10 @@
     <script src="{{ 'component-fake-color-swatch.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'component-fake-variant-option.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'lazysizes.js' | asset_url }}" async="async"></script>
-    {% comment %} <script src="{{ 'base-ada.js' | asset_url }}" defer="defer"></script> {% endcomment %}
+    <script src="{{ 'base-ada.js' | asset_url }}" defer="defer"></script>
 
     {% comment %} 插件代码 {% endcomment %}
+    {% render 'plug-in-code' %}
 
     <script defer>
           {% comment %} bing Ads {% endcomment %}

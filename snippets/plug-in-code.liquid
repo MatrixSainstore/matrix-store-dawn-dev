@@ -63,13 +63,14 @@
   </script>
 {% endif %}
 
-{% render 'GA4-product-datalayer' %}
+{% comment %} {% render 'GA4-product-datalayer' %} {% endcomment %}
 
 <!-- Back in Stock helper snippet -->
-{% render 'back-in-stock-helper' %}
+{% comment %} {% render 'back-in-stock-helper' %} {% endcomment %}
 <!-- End Back in Stock helper snippet -->
-
-{% render 'smile-initializer' %}
+{% comment %}
+  {% render 'smile-initializer' %}
+{% endcomment %}
 
 {%- if template contains 'product' -%}
   {% render 'notify-me' %}

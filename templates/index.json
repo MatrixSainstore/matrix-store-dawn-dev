@@ -227,19 +227,29 @@
         "link_block_FGekxk": {
           "type": "link_block",
           "settings": {
+            "youtube_image": "shopify://shop_images/person-stands-on-rocks-poking-out-of-the-ocean-shoreline.jpg",
             "youtbue_link": "https://www.youtube.com/watch?v=76kM_UXrATc"
           }
         },
         "link_block_i7b8d8": {
           "type": "link_block",
           "settings": {
-            "youtbue_link": ""
+            "youtube_image": "shopify://shop_images/person-fishing-on-the-beach-is-silhouetted-at-sunset.jpg",
+            "youtbue_link": "https://www.youtube.com/watch?v=D-fx3MkW7aU&t=182s"
+          }
+        },
+        "link_block_EzrLQ9": {
+          "type": "link_block",
+          "settings": {
+            "youtube_image": "shopify://shop_images/a-bridge-sitting-in-thick-pink-and-purple-fog.jpg",
+            "youtbue_link": "https://www.youtube.com/watch?v=D-fx3MkW7aU&t=182s"
           }
         }
       },
       "block_order": [
         "link_block_FGekxk",
-        "link_block_i7b8d8"
+        "link_block_i7b8d8",
+        "link_block_EzrLQ9"
       ],
       "name": "Home Youtube blocks",
       "settings": {}

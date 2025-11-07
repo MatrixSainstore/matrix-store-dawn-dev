@@ -361,18 +361,20 @@
                         {%- for childlink in link.links -%}
                           {{ childlink.handle }}
                           {% assign collection = collections[childlink.handle] %}
-
                           {% assign group = forloop.index | modulo: 4 %}
-                          <a class="collection-item-link" href="{{ childlink.url }}">
-                            <img
-                              src="{{  childlink.title | handle | append:".webp" | prepend:"nav-" | file_url  }}"
-                              loading="lazy"
-                              width="124"
-                              height="100"
-                            >
-                            <div class="collection-item-title">{{ childlink.title | capitalize }}</div>
-                          </a>
-                          {% if group == 0 %}<div class="collection-item--line"></div>{% endif %}
+                          {% if collection != blank %}
+                            <a class="collection-item-link" href="{{ childlink.url }}">
+                              <img
+                                data-src="{{ collection.image | img_url: '300x300' }}"
+                                src="{{ collection.image | img_url: '300x300' }}"
+                                loading="lazy"
+                                width="124"
+                                height="100"
+                              >
+                              <div class="collection-item-title">{{ childlink.title | capitalize }}</div>
+                            </a>
+                            {% if group == 0 %}<div class="collection-item--line"></div>{% endif %}
+                          {% endif %}
                         {% endfor %}
                       </div>
                     </div>

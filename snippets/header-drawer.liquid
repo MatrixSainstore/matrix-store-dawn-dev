@@ -361,6 +361,7 @@
                         {%- for childlink in link.links -%}
                           {{ childlink.url }}
                           {{ childlink.title }}
+                          {{ childlink.handle }}
                           {% assign group = forloop.index | modulo: 4 %}
                           <a class="collection-item-link" href="{{ childlink.url }}">
                             <img

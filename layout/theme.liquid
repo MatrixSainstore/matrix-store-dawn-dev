@@ -370,11 +370,10 @@
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 
     {% comment %} 首页样式 {% endcomment %}
-    {% comment %}
-      {% if template == 'index' %}
-       {{ 'home.css' | asset_url | stylesheet_tag }}
-      {% endif %}
-    {% endcomment %}
+
+    {% if template == 'index' %}
+      {{ 'home.css' | asset_url | stylesheet_tag }}
+    {% endif %}
 
     {% assign template_type = template | split: '.' | first %}
 

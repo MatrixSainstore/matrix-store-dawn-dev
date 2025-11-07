@@ -244,12 +244,28 @@
             "youtube_image": "shopify://shop_images/a-bridge-sitting-in-thick-pink-and-purple-fog.jpg",
             "youtbue_link": "https://www.youtube.com/watch?v=D-fx3MkW7aU&t=182s"
           }
+        },
+        "link_block_rGYYQQ": {
+          "type": "link_block",
+          "settings": {
+            "youtube_image": "shopify://shop_images/two-people-surfing-in-blue-choppy-water.jpg",
+            "youtbue_link": "https://www.youtube.com/watch?v=D-fx3MkW7aU&t=182s"
+          }
+        },
+        "link_block_Een48b": {
+          "type": "link_block",
+          "settings": {
+            "youtube_image": "shopify://shop_images/silver-lamp-on-a-white-table-next-to-books.jpg",
+            "youtbue_link": "https://www.youtube.com/watch?v=D-fx3MkW7aU&t=182s"
+          }
         }
       },
       "block_order": [
         "link_block_FGekxk",
         "link_block_i7b8d8",
-        "link_block_EzrLQ9"
+        "link_block_EzrLQ9",
+        "link_block_rGYYQQ",
+        "link_block_Een48b"
       ],
       "name": "Home Youtube blocks",
       "settings": {}

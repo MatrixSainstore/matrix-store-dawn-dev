@@ -358,6 +358,7 @@
                   {% if linkTitle == 'PRODUCTS' %}
                     <div class="mb-secondary-menu">
                       <div class="product-collection-lists">
+                        {{ link.links }}
                         {%- for childlink in link.links -%}
                           {% assign group = forloop.index | modulo: 4 %}
                           <a class="collection-item-link" href="{{ childlink.url }}">

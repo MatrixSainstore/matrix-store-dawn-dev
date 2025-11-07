@@ -272,6 +272,13 @@
             "youtube_image": "shopify://shop_images/person-carries-a-wooden-box-full-of-dough-balls.jpg",
             "youtbue_link": "https://www.youtube.com/watch?v=D-fx3MkW7aU&t=182s"
           }
+        },
+        "link_block_aGQGMU": {
+          "type": "link_block",
+          "settings": {
+            "youtube_image": "shopify://shop_images/person-carries-a-wooden-box-full-of-dough-balls.jpg",
+            "youtbue_link": "https://www.youtube.com/watch?v=D-fx3MkW7aU&t=182s"
+          }
         }
       },
       "block_order": [
@@ -281,7 +288,8 @@
         "link_block_rGYYQQ",
         "link_block_Een48b",
         "link_block_x8ybB7",
-        "link_block_kE4Ggy"
+        "link_block_kE4Ggy",
+        "link_block_aGQGMU"
       ],
       "name": "Home Youtube blocks",
       "settings": {}

@@ -220,6 +220,29 @@
       "settings": {
         "title": "Featured In Media"
       }
+    },
+    "home_youtube_block_D8x7Xb": {
+      "type": "home-youtube-block",
+      "blocks": {
+        "link_block_FGekxk": {
+          "type": "link_block",
+          "settings": {
+            "youtbue_link": "https://www.youtube.com/watch?v=76kM_UXrATc"
+          }
+        },
+        "link_block_i7b8d8": {
+          "type": "link_block",
+          "settings": {
+            "youtbue_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "link_block_FGekxk",
+        "link_block_i7b8d8"
+      ],
+      "name": "Home Youtube blocks",
+      "settings": {}
     }
   },
   "order": [
@@ -227,6 +250,7 @@
     "featured_collection",
     "home_collection_products_new_irjdHH",
     "home_policy_yVRH7f",
-    "home_brands_NYj6xP"
+    "home_brands_NYj6xP",
+    "home_youtube_block_D8x7Xb"
   ]
 }
